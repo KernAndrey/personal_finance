@@ -38,8 +38,9 @@ class TestMigrations:
             versions = conn.execute("SELECT version FROM schema_version").fetchall()
         finally:
             conn.close()
-        assert len(versions) == 1
-        assert versions[0]["version"] == 1
+        assert len(versions) == 2
+        applied = {v["version"] for v in versions}
+        assert applied == {1, 2}
 
     def test_wal_mode_enabled(self, tmp_env):
         conn = db.get_connection()
@@ -55,7 +56,7 @@ class TestMigrations:
         assert "Еда" in names
         assert "Жильё" in names
         assert "Прочее" in names
-        assert len(cats) == 13
+        assert len(cats) == 14
 
 
 # ── add_transaction ─────────────────────────────────────────────────────────
@@ -421,7 +422,7 @@ class TestGetMonthlyTotals:
 class TestCategories:
     def test_get_categories_returns_all(self, tmp_env):
         cats = db.get_categories()
-        assert len(cats) == 13
+        assert len(cats) == 14
 
     def test_categories_sorted_by_sort_order(self, tmp_env):
         cats = db.get_categories()

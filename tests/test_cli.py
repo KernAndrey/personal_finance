@@ -405,7 +405,7 @@ class TestCategoriesCommand:
         assert "Прочее" in result.output
         # Count lines with category icons
         lines = [l for l in result.output.strip().split("\n") if l.strip()]
-        assert len(lines) == 13
+        assert len(lines) == 14
 
 
 # ── export command ──────────────────────────────────────────────────────────
